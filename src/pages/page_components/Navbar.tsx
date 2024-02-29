@@ -5,7 +5,11 @@ const Navbar: React.FC = () => {
         <nav className="bg-gray-800 p-4">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
-                <div className="text-white text-lg font-semibold">MC Mod Scanner</div>
+                <div className="text-white text-lg font-semibold">
+                    <a href="/">
+                        MC Mod Scanner
+                    </a>
+                </div>
 
                 {/* Navigation Links */}
                 <div className="space-x-4">
@@ -15,11 +19,8 @@ const Navbar: React.FC = () => {
                     <a href="/about" className="text-white hover:text-gray-300">
                         About
                     </a>
-                    <a href="/info" className="text-white hover:text-gray-300">
-                        Info
-                    </a>
                     <a href="/placeholder" className="text-white hover:text-gray-300">
-                        Source Code
+                        Github
                     </a>
                 </div>
             </div>
