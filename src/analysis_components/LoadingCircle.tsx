@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const LoadingCircle: React.FC = () => {
     return (
         <div className="bg-gray-200 p-8 flex flex-col items-center justify-center h-screen">

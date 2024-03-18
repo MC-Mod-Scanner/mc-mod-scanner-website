@@ -2,19 +2,14 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {LoadingCircle} from "./LoadingCircle";
 
-export interface Warnings {
-    type: string;
-    info: string;
-}
-
-export interface FileWarnings {
+export interface JarStrings {
     classPath: string;
-    warnings: Warnings[];
+    strings: string[];
+    nullByteCount: number;
 }
 
-const CodeAnalysis: React.FC = () => {
-
-    const [fileWarnings, setFileWarnings] = useState<FileWarnings[] | null>(null);
+const StringViewer: React.FC = () => {
+    const [jarStrings, setJarStrings] = useState<JarStrings[] | null>(null);
     const location = useLocation();
 
     useEffect(() => {
@@ -22,9 +17,9 @@ const CodeAnalysis: React.FC = () => {
             console.log(location.pathname)
             try {
                 const apiURL= process.env.MCMODSCANNER_API_URL || 'https://mcmodscanner.online/api';
-                const response = await fetch(apiURL + location.pathname + "/analysis"); // Replace with your actual API endpoint
+                const response = await fetch(apiURL + location.pathname + "/strings"); // Replace with your actual API endpoint
                 const data = await response.json();
-                setFileWarnings(data);
+                setJarStrings(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -35,9 +30,9 @@ const CodeAnalysis: React.FC = () => {
 
     return (
         <div>
-            {fileWarnings ? (
-                (fileWarnings.length !== 0 ? (
-                    fileWarnings.map((item, index) => (
+            {jarStrings ? (
+                (jarStrings.length !== 0 ? (
+                    jarStrings.map((item, index) => (
                         <div
                             key={index}
                             className={`p-4 w-full ${
@@ -45,10 +40,11 @@ const CodeAnalysis: React.FC = () => {
                             }`}
                         >
                             <h2 className="text-sm font-bold">{item.classPath}</h2>
+                            <h2 className="text-sm font-bold pb-2">Null Character Count: {item.nullByteCount}</h2>
                             <ul>
-                                {item.warnings.map((warning, index) => (
+                                {item.strings.map((warning, index) => (
                                     <li key={index}>
-                                        {warning.type}
+                                        {warning}
                                     </li>
                                 ))}
                             </ul>
@@ -56,14 +52,14 @@ const CodeAnalysis: React.FC = () => {
                     ))
                 ) : (
                     <div className="flex flex-col items-center h-screen">
-                        <h1 className="pt-20 text-xl">No code warnings found.</h1>
+                        <h1 className="pt-20 text-xl">No strings found.</h1>
                     </div>
                 ))
             ) : (
                 <LoadingCircle />
             )}
         </div>
-    )
+    );
 }
 
-export {CodeAnalysis};
+export {StringViewer};

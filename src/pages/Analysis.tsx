@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Navbar from "./page_components/Navbar";
 import {useParams} from "react-router-dom";
 import {CodeAnalysis} from "../analysis_components/CodeAnalysis";
 import FileViewer from "../analysis_components/FileViewer";
+import {StringViewer} from "../analysis_components/StringViewer";
 
 const Analysis: React.FC = () => {
     const [currentPage, setCurrentPage] = useState('code');
@@ -14,14 +15,14 @@ const Analysis: React.FC = () => {
             case 'code':
                 return <CodeAnalysis/>;
             case 'files':
-                return <FileViewer/>
+                return <FileViewer/>;
+            case 'strings':
+                return <StringViewer/>;
             default:
                 return null;
         }
     };
 
-
-    //<div className="flex items-center justify-center w-3/5">
     return (
         <div>
             <Navbar/>
@@ -39,9 +40,15 @@ const Analysis: React.FC = () => {
                         </button>
                         <button
                             onClick={() => setCurrentPage('files')}
-                            className={`hover:text-blue-500 ${currentPage === 'files' ? 'text-blue-500' : ''}`}
+                            className={`mr-10 hover:text-blue-500 ${currentPage === 'files' ? 'text-blue-500' : ''}`}
                         >
                             Files
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage('strings')}
+                            className={`hover:text-blue-500 ${currentPage === 'strings' ? 'text-blue-500' : ''}`}
+                        >
+                            Strings
                         </button>
                     </div>
                     <div className="border-t border-gray-300 my-4 mt-1 mb-3"></div>

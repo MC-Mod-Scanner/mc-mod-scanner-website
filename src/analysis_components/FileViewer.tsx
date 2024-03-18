@@ -39,8 +39,8 @@ const FileViewer: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch data from the API
-                const response = await fetch("http://localhost:9999" + location.pathname + "/structure");
+                const apiURL= process.env.MCMODSCANNER_API_URL || 'https://mcmodscanner.online/api';
+                const response = await fetch(apiURL + location.pathname + "/structure");
                 const data = await response.json();
                 setFileStructure(data);
             } catch (error) {
@@ -71,7 +71,7 @@ const FileViewer: React.FC = () => {
                                 <a
                                     download={files[key].name}
                                     className="pl-4 text-blue-600 underline"
-                                    href={"http://localhost:9999" + location.pathname + "/file/" + files[key].sha256}
+                                    href={"https://mcmodscanner.online/api" + location.pathname + "/file/" + files[key].sha256}
                                 >
                                     download
                                 </a>

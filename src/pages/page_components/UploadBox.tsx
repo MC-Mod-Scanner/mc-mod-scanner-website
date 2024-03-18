@@ -25,8 +25,9 @@ const UploadBox: React.FC = () => {
                 const formData = new FormData();
                 formData.append('file', files[0]);
 
-                // TODO: make this better
-                const response = await fetch('http://localhost:9999/upload', {
+                const apiURL= process.env.MCMODSCANNER_API_URL || 'https://mcmodscanner.online/api';
+
+                const response = await fetch( apiURL + '/upload', {
                     method: 'POST',
                     body: formData,
                 })
